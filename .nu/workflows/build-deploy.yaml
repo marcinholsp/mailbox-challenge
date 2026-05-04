@@ -1,0 +1,15 @@
+apiVersion: workflows.dev/v1alpha1
+kind: TemplateInstance
+metadata:
+  namespace: pipelines
+spec:
+  templateName: clojure-service-build-deploy
+  input:
+    serverName: mailbox-challenge
+    serviceName: mailbox-challenge
+  inputFrom:
+    - name: service
+      valueFrom:
+        configMapKeyRef:
+          key: mailbox-challenge
+          name: services

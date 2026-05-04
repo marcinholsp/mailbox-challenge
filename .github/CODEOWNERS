@@ -1,0 +1,2 @@
+# Ensure project.clj is not owned by placing this entry at the end of the file, to allow automatic management for the managed-dependencies plugin
+project.clj

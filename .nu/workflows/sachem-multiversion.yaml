@@ -1,0 +1,12 @@
+apiVersion: workflows.dev/v1alpha1
+kind: TemplateInstance
+metadata:
+  namespace: pipelines
+spec:
+  inputFrom:
+    - name: sachem
+      valueFrom:
+        configMapKeyRef:
+          key: mailbox-challenge
+          name: services-sachem
+  templateName: clojure-service-sachem-multiversion

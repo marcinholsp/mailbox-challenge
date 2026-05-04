@@ -1,0 +1,9 @@
+{:channel  "alpha"
+ :policies {:public
+            {:anonymous [{:fragments [{:fragment "public"}]}]}
+            :employees
+            {:workforce [{:fragments [{:fragment "only-employees"}]}]}
+
+            :employees+services
+            {:workforce [{:fragments [{:fragment "only-employees"}]}]
+             :service   [{:fragments [{:fragment "open"}]}]}}}

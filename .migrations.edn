@@ -1,0 +1,8 @@
+;; auto-generated file
+;; By editing this file you can make the system skip certain migration.
+;; See README for more details
+[{:id 2, :_title "Add clj-kondo :config-paths config"}
+ {:id 5, :_title "Add nubank/codestyle"}
+ {:id 10, :_title "Remove deprecated uses of loose-enum"}
+ {:id 12, :_title "Replace usages of deprecated random uuid generators to clojure.core/random-uuid"}
+ {:id 15, :_title "Add workflow to check deprecated now sync widgets"}]

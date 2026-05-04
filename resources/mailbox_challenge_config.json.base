@@ -1,0 +1,30 @@
+{
+  "version": "0",
+  "environment": "test",
+  "dev_port": 8709,
+  "primary_brokers": "127.0.0.1:9092",
+  "nu_private_ip": "127.0.0.1",
+  "zk_primary": "localhost",
+  "kafka_replicas": 1,
+  "http_timeout": 30000,
+  "auth-bucket": "nu-auth",
+  "aws_account_alias": "br",
+  "country": "br",
+  "prototype": "s0",
+  "services": {
+    "auth": "http://localhost:8014",
+    "mailbox-challenge": "http://localhost:8709"
+  },
+  "datomic_uri": "datomic:mem://mailbox-challenge",
+  "datomic": {
+    "circuit_breaker": {
+      "request-volume-threshold-half-open": 10,
+      "error-threshold-percentage": 0.1,
+      "error-threshold-volume": 1000000,
+      "default-half-open-change-in-millis": 60000
+    }
+  },
+  "bookmarks": {
+  },
+  "decode-path-parameters?": true
+}

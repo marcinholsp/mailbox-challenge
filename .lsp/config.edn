@@ -1,0 +1,2 @@
+{:classpath-config-paths ["nubank/codestyle"
+                          "nubank/backend-service"]}

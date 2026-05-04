@@ -1,0 +1,15 @@
+apiVersion: workflows.dev/v1alpha1
+kind: TemplateInstance
+metadata:
+  namespace: pipelines
+spec:
+  templateName: clojure-service-sachem-i18n
+  input:
+    sachem-params:
+      skipPromoteSpec: "true"
+  inputFrom:
+    - name: sachem
+      valueFrom:
+        configMapKeyRef:
+          name: services-sachem
+          key: mailbox-challenge

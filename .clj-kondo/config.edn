@@ -1,0 +1,8 @@
+{:config-paths ["nubank/codestyle"]
+ :lint-as {integration.aux.init/defflow clojure.test/deftest}
+ :linters {:clojure-lsp/different-aliases {:level :warning}
+           :discouraged-var {common-core.types.loose-enum/from-enum {:message "Use common-core.schema/enum-or instead"}
+                             common-core.types.loose-enum/->LooseEnum {:message "Use common-core.schema/enum-or instead"}
+                             common-test.uuid/uuid {:message "Use clojure.core/random-uuid instead"}
+                             common-core.misc/random-uuid {:message "Use clojure.core/random-uuid instead"}
+                             common-core.test-helpers/uuid {:message "Use clojure.core/random-uuid instead"}}}}

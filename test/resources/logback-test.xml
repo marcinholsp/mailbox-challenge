@@ -1,0 +1,30 @@
+<!-- Logback configuration. See http://logback.qos.ch/manual/index.html -->
+<configuration scan="true" scanPeriod="10 seconds">
+  <!-- Console output -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="nu_logback_encoder.data_layout"/>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>OFF</level>
+    </filter>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="STDOUT"/>
+  </root>
+
+  <!-- For loggers in the these namespaces, log at all levels. -->
+  <logger name="user" level="ALL"/>
+  <!-- To log pedestal internals, enable this and change ThresholdFilter to DEBUG -->
+  <logger name="io.pedestal" level="WARN"/>
+  <logger name="common-io.interceptors" level="debug" />
+  <logger name="common-io.diplomat" level="debug" />
+  <logger name="common-io.kafka" level="debug" />
+  <logger name="com.amazonaws" level="debug" />
+  <logger name="mailbox-challenge"    level="debug"/>
+
+  <!-- Stop output INFO at start -->
+  <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+</configuration>

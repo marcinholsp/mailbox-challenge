@@ -1,0 +1,14 @@
+apiVersion: workflows.dev/v1alpha1
+kind: TemplateInstance
+metadata:
+ namespace: pipelines
+spec:
+  templateName: clojure-service-pr
+  input:
+    runOnDefaultBranch: "true"
+    unitTestsResources:
+      cpu: 2
+      memory: 2Gi
+    integrationTestsResources:
+      cpu: 2
+      memory: 2Gi
