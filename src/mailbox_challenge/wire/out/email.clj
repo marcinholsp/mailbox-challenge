@@ -8,3 +8,13 @@
     :status   s/Keyword
     :provider (s/maybe s/Keyword)
     :sent-at  (s/maybe java.util.Date)}))
+
+(s/defschema ProviderStat
+  (schema/strict-schema
+   {:provider s/Keyword
+    :count    s/Int}))
+
+(s/defschema EmailStats
+  (schema/strict-schema
+   {:total-sent  s/Int
+    :by-provider [ProviderStat]}))

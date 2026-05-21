@@ -63,6 +63,11 @@
             :failed {:status 502 :body {:error "All email providers failed"}}
             {:status 409 :body (adapters.email/model->wire-out result)}))))))
 
+(defn get-email-stats
+  [{:keys [components]}]
+  (let [conn (d-pro/conn (:datomic components))]
+    {:status 200 :body (controllers.email/get-stats conn)}))
+
 ;; Endpoints mock para dev/testes (simulam as APIs externas de e-mail)
 (defn mock-mailgun-send [_]
   {:status 200 :body {:success true}})
@@ -101,6 +106,14 @@
                                       409 wire.out.email/EmailResponse})
                  send-email)
      :route-name :email-send]
+
+    ["/email/stats"
+     :get (conj common-interceptors
+                (doc/desc "Email delivery statistics")
+                (auth/public)
+                (adapt/externalize! {200 wire.out.email/EmailStats})
+                get-email-stats)
+     :route-name :email-stats]
 
     ["/mock/mailgun/send"
      :post (conj common-interceptors

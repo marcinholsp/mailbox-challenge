@@ -85,3 +85,25 @@
      (servlet/request {:method :post
                        :uri    "/email/send"
                        :body   valid-email-body}))))
+
+(defflow get-email-stats-test
+  (flow "retorna estatísticas de envio de e-mail"
+    (http-client/with-responses
+      {:mailgun-send (constantly {:status 200 :body {:success true}})}
+      (flow "envia dois e-mails e verifica estatísticas"
+        (servlet/request {:method  :post
+                          :uri     "/email/send"
+                          :headers {"idempotency-key" (str (java.util.UUID/randomUUID))
+                                    "content-type"   "application/json"}
+                          :body    valid-email-body})
+        (servlet/request {:method  :post
+                          :uri     "/email/send"
+                          :headers {"idempotency-key" (str (java.util.UUID/randomUUID))
+                                    "content-type"   "application/json"}
+                          :body    valid-email-body})
+        (match?
+         {:status 200
+          :body   (m/embeds {:total-sent  2
+                             :by-provider (m/in-any-order [{:provider :mailgun :count 2}])})}
+         (servlet/request {:method :get
+                           :uri    "/email/stats"}))))))

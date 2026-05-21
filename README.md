@@ -18,7 +18,9 @@ Serviços de negócio não precisam saber qual provedor de e-mail está sendo us
 
 ---
 
-## Fluxograma
+## Fluxogramas
+
+### `POST /email/send`
 
 ```mermaid
 flowchart TD
@@ -42,6 +44,17 @@ flowchart TD
 
     I --> L[Retorna resposta\nwire/out 200 OK]
     K --> ERR3[502 Bad Gateway]
+```
+
+### `GET /email/stats`
+
+```mermaid
+flowchart TD
+    A([Cliente faz\nGET /email/stats]) --> B[Obtém conexão\ndo componente Datomic]
+    B --> C["count-total-sent\nConta e-mails com\nstatus=:sent"]
+    C --> D["count-sent-by-provider\nAgrupa e-mails :sent\npor provedor"]
+    D --> E["Monta resposta\n{total-sent, by-provider}"]
+    E --> F[200 OK]
 ```
 
 ---
@@ -85,6 +98,26 @@ flowchart TD
   "status":    "sent",
   "provider":  "mailgun",
   "sent_at":   "2026-04-20T12:00:00Z"
+}
+```
+
+### `GET /email/stats`
+
+**Respostas:**
+
+| Status | Situação                                  |
+|--------|-------------------------------------------|
+| `200`  | Estatísticas retornadas com sucesso        |
+
+**Exemplo de resposta 200:**
+
+```json
+{
+  "total-sent": 42,
+  "by-provider": [
+    {"provider": "mailgun",  "count": 35},
+    {"provider": "sendgrid", "count": 7}
+  ]
 }
 ```
 
@@ -367,6 +400,9 @@ curl -X POST http://localhost:8080/email/send \
   -d '{"to":"a@b.com","from":"x@y.com","subject":"Oi","body":"Teste"}'
 
 # Replay com mesma chave → deve retornar 409 sem chamar provedores
+
+# Consultar estatísticas de envio
+curl http://localhost:8080/email/stats
 ```
 
 ---

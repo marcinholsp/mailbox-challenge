@@ -45,6 +45,13 @@
             provider-kw
             (recur (conj failed provider-kw))))))))
 
+(defn get-stats
+  [datomic]
+  (let [total   (datomic.email/count-total-sent datomic)
+        by-prov (datomic.email/count-sent-by-provider datomic)]
+    {:total-sent  total
+     :by-provider (mapv (fn [[provider cnt]] {:provider provider :count cnt}) by-prov)}))
+
 (s/defn execute! :- models.email/Email
   "Orquestra o envio de e-mail com idempotência e fallback de provedores.
 

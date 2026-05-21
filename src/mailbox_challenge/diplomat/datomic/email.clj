@@ -69,3 +69,17 @@
              provider (assoc :email/provider provider)
              sent-at  (assoc :email/sent-at sent-at))]
     @(d/transact datomic [tx])))
+
+(defn count-total-sent
+  [datomic]
+  (or (d/q '[:find (count ?e) .
+             :where [?e :email/status :sent]]
+           (d/db datomic))
+      0))
+
+(defn count-sent-by-provider
+  [datomic]
+  (d/q '[:find ?provider (count ?e)
+         :where [?e :email/status :sent]
+                [?e :email/provider ?provider]]
+       (d/db datomic)))
